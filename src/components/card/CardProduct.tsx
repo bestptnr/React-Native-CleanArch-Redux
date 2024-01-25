@@ -85,7 +85,7 @@ const CardProduct = ({
                     </View>
                     <View>
                         <Text>Price : {price}$ </Text>
-                        <Text>Save : {discountPercentage}</Text>
+                        {/* <Text>Save : {discountPercentage}</Text> */}
                     </View>
                 </View>
 
