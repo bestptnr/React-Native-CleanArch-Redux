@@ -14,11 +14,14 @@ import { AppDispatch } from "../../redux/store";
 import { getProductList } from "../../redux/slices/productSlice";
 import CardProduct from "../../components/card/CardProduct";
 import { Product } from "../../types/Product";
+import { StackNavigation } from "../../routes/AppNavigation";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const productList = useSelector((state: any) => state.product.products);
+    const navigation = useNavigation<StackNavigation>()
 
     useEffect(() => {
         dispatch(getProductList())
@@ -35,8 +38,12 @@ const HomeScreen = () => {
                         return (
                             <CardProduct
                                 key={index}
-                                onPress={function (): void {
-                                    throw new Error("Function not implemented.");
+                                onPress={() => {
+                                    navigation.navigate("ProductDetailScreen", {
+                                        product: {
+                                            ...item
+                                        }
+                                    })
                                 }}
                                 title={item.title}
                                 description={item.description}
@@ -47,6 +54,7 @@ const HomeScreen = () => {
                                 rating={item.rating}
                                 brand={item.brand}
                                 category={item.category}
+
                             />
                         )
                     })}

@@ -5,6 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "../screens/auth/LoginScreen";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProductDetailScreen from "../screens/products/ProductDetailScreen";
+import CartProductScreen from "../screens/products/CartProductScreen";
+
+
 
 import { useSelector } from "react-redux";
 import { AuthState } from "../types/Auth";
@@ -12,7 +15,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../constants";
 
 
-export type ScreenNames = ["HomeScreen", "LoginScreen","ProductDetailScreen"] 
+export type ScreenNames = ["HomeScreen", "LoginScreen", "ProductDetailScreen", "CartProductScreen"]
 export type RootStackParamList = Record<ScreenNames[number], any>;
 export type StackNavigation = NavigationProp<RootStackParamList>;
 
@@ -37,13 +40,21 @@ function TabNavigation() {
                     ),
                 })}
             />
+            <Tabs.Screen
+                name="cart"
+                component={CartProductScreen}
+                options={() => ({
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialIcons name="shopping-cart" color={color} size={26} />
+                    ),
+                })}
+            />
         </Tabs.Navigator>
     )
 }
 
-interface AppNavigationProps {
-    isLogin: boolean;
-}
+
 function AppNavigation() {
     const { userData } = useSelector((state: AuthState) => state.auth);
     return (
@@ -55,12 +66,13 @@ function AppNavigation() {
                             component={TabNavigation}
                             name="HomeScreen"
                             options={{
-                                title: "Home"
+                                title: ""
                             }} />
                         <Stack.Screen
                             component={ProductDetailScreen}
                             name="ProductDetailScreen"
                         />
+
                     </Stack.Group>
                 ) : (<Stack.Screen
                     component={LoginScreen}

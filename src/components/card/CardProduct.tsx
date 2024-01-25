@@ -46,23 +46,7 @@ const CardProduct = ({
 }: CardProduct) => {
     const navigation = useNavigation<StackNavigation>()
     return (
-        <TouchableOpacity onPress={() => {
-            navigation.navigate("ProductDetailScreen", {
-                product: {
-                    title,
-                    titleStyle,
-                    description,
-                    descriptionStyle,
-                    containerStyle,
-                    price,
-                    thumbnail,
-                    rating,
-                    category,
-                    brand,
-                    discountPercentage,
-                }
-            })
-        }}>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.cardBody}>
                 <Image
                     source={{ uri: thumbnail }}
