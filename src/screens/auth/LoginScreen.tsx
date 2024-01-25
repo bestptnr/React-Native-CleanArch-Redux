@@ -27,8 +27,8 @@ const LoginScreen = () => {
                 <Image
                     source={IMAGES.logo}
                     style={{
-                        width: 200,
-                        height: 200,
+                        width: 250,
+                        height: 250,
                         marginLeft: 'auto',
                         marginRight: 'auto'
                     }}
@@ -51,10 +51,12 @@ const LoginScreen = () => {
                     label='Login'
                     labelStyle={{
                         color: COLORS.white,
-                        fontSize: 20
+                        fontSize: 20,
+
                     }}
                     containerStyle={{
-                        backgroundColor: COLORS.primary
+                        backgroundColor: COLORS.bluepurple,
+                        margin:SIZES.margin
                     }}
                     onPress={handleLogin}
                     isLoading={isLoading}

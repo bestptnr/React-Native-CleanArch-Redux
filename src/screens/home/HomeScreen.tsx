@@ -1,53 +1,77 @@
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { COLORS, SIZES } from '../../constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { CounterState } from '../../types/Counter';
-import { increment, decrement } from '../../redux/slices/counterSlice';
-import { TextButton } from '../../components';
-import { logout } from '../../redux/slices/authSlice';
-import { AppDispatch } from '../../redux/store';
+import React, { useEffect, useState } from "react";
+import {
+    StyleSheet,
+    View,
+    SafeAreaView,
+    ScrollView,
+    ActivityIndicator,
+} from "react-native";
+import { COLORS, SIZES } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { TextButton } from "../../components";
+import { logout } from "../../redux/slices/authSlice";
+import { AppDispatch } from "../../redux/store";
+import { getProductList } from "../../redux/slices/productSlice";
+import CardProduct from "../../components/card/CardProduct";
+import { Product } from "../../types/Product";
 
 const HomeScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const count = useSelector((state: CounterState) => state.counter.value);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const productList = useSelector((state: any) => state.product.products);
 
-    const handleIncrement = () => {
-        dispatch(increment());
-    };
-
-    const handleDecrement = () => {
-        dispatch(decrement());
-    };
-
+    useEffect(() => {
+        dispatch(getProductList())
+            .then(() => setIsLoading(true))
+    }, []);
+    if (!isLoading) {
+        return <ActivityIndicator />
+    }
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ backgroundColor: COLORS.white }}>
-                {/* <Text style={styles.textNumber}>{count ? count : 0}</Text>
-                <TouchableOpacity style={styles.button} onPress={handleIncrement}>
-                    <Text style={styles.textButton}>+</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleDecrement}>
-                    <Text style={styles.textButton}>-</Text>
-                </TouchableOpacity> */}
                 <View style={styles.container}>
-                    <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ex explicabo deserunt at ut aperiam in voluptatibus, accusantium itaque tempore dolor minima obcaecati officiis? Earum, minus sapiente. Molestiae, non dolores?</Text>
-                    
-                </View>
+                    {productList?.products.map((item: Product, index: number) => {
+                        return (
+                            <CardProduct
+                                key={index}
+                                onPress={function (): void {
+                                    throw new Error("Function not implemented.");
+                                }}
+                                title={item.title}
+                                description={item.description}
+                                descriptionStyle={{}}
+                                price={item.price}
+                                thumbnail={item.thumbnail}
+                                discountPercentage={item.discountPercentage}
+                                rating={item.rating}
+                                brand={item.brand}
+                                category={item.category}
+                            />
+                        )
+                    })}
 
+                </View>
             </ScrollView>
-            <View style={{ backgroundColor: COLORS.white, alignItems: 'center', paddingVertical: SIZES.margin, paddingHorizontal: SIZES.margin }}>
+            <View
+                style={{
+                    backgroundColor: COLORS.white,
+                    alignItems: "center",
+                    paddingVertical: SIZES.margin,
+                    paddingHorizontal: SIZES.margin,
+                }}
+            >
                 <TextButton
                     label={"Logout"}
                     onPress={() => {
-                        dispatch(logout())
+                        dispatch(logout());
                     }}
                     containerStyle={{
-                        width: '100%',
-                        backgroundColor: COLORS.primary
+                        width: "100%",
+                        backgroundColor: COLORS.bluepurple,
                     }}
                     labelStyle={{
-                        color: COLORS.white
+                        color: COLORS.white,
                     }}
                 />
             </View>
@@ -59,22 +83,21 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-
         backgroundColor: COLORS.white,
         paddingHorizontal: SIZES.margin,
+
     },
     textNumber: {
         fontSize: 32,
     },
     button: {
         backgroundColor: COLORS.primary,
-        width: '100%',
+        width: "100%",
         marginTop: SIZES.margin,
         height: 40,
         borderRadius: SIZES.base,
-        justifyContent: 'center',
-        alignItems: 'center',
-
+        justifyContent: "center",
+        alignItems: "center",
     },
     textButton: {
         fontSize: 32,

@@ -3,12 +3,12 @@ import React from "react";
 import { COLORS, SIZES } from '../../constants';
 
 type TextButtonProps = {
-    onPress: () => void;
-    label: string;
-    labelStyle?: StyleProp<TextStyle>;
-    containerStyle?: StyleProp<ViewStyle>;
-    isDisable?: boolean;
-    isLoading?: boolean;
+    onPress: () => void,
+    label: string,
+    labelStyle?: StyleProp<TextStyle>,
+    containerStyle?: StyleProp<ViewStyle>,
+    isDisable?: boolean,
+    isLoading?: boolean,
 }
 
 const TextButton = ({

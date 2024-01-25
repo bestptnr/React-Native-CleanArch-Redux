@@ -3,7 +3,12 @@ const COLORS = {
     green: "green",
     blue: "blue",
     black:"black",
-    primary:'#3D5436'
+    grey:"grey",
+    primary:'#3D5436',
+    bluepurple:'#3839AF',
+    purple:"#AE69DD",
+    lightpurple:"#C1ACCF"
+
 }
 
 export default COLORS

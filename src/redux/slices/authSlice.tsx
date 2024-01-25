@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { GET, POST, PUT, DELETE } from "../../api/index"
-import { AxiosResponse } from 'axios'
-import { LoginParams } from '../../types/LoginParams';
+import { POST } from "../../api/index"
 import { ENDPOINT } from '../../constants';
-import { getLocalStorage, setLocalStorage } from '../../utils/LocalStorage';
-import { RootState } from '../store';
 
 
 interface AuthState {

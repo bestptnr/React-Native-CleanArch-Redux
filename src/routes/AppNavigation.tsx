@@ -1,16 +1,20 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import LoginScreen from "../screens/auth/LoginScreen";
 import HomeScreen from "../screens/home/HomeScreen";
-
+import ProductDetailScreen from "../screens/products/ProductDetailScreen";
 
 import { useSelector } from "react-redux";
 import { AuthState } from "../types/Auth";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../constants";
 
+
+export type ScreenNames = ["HomeScreen", "LoginScreen","ProductDetailScreen"] 
+export type RootStackParamList = Record<ScreenNames[number], any>;
+export type StackNavigation = NavigationProp<RootStackParamList>;
 
 
 const Stack = createNativeStackNavigator()
@@ -20,7 +24,7 @@ function TabNavigation() {
     return (
         <Tabs.Navigator
             screenOptions={({ }) => ({
-                tabBarActiveTintColor: COLORS.primary,
+                tabBarActiveTintColor: COLORS.bluepurple,
             })}
         >
             <Tabs.Screen
@@ -45,13 +49,20 @@ function AppNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                {userData ? (<Stack.Screen
-                    component={TabNavigation}
-                    name="HomeScreen"
-                    options={{
-                        title: "Home"
-                    }}
-                />) : (<Stack.Screen
+                {userData ? (
+                    <Stack.Group>
+                        <Stack.Screen
+                            component={TabNavigation}
+                            name="HomeScreen"
+                            options={{
+                                title: "Home"
+                            }} />
+                        <Stack.Screen
+                            component={ProductDetailScreen}
+                            name="ProductDetailScreen"
+                        />
+                    </Stack.Group>
+                ) : (<Stack.Screen
                     component={LoginScreen}
                     name="LoginScreen"
                     options={{
